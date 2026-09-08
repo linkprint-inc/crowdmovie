@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "round-final-v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["round_id", "ranked_candidates", "selected_submission_id", "rubric_version"],
+  "properties": {
+    "round_id": {"type": "string"},
+    "ranked_candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["submission_id", "final_score", "rank", "reason"],
+        "properties": {
+          "submission_id": {"type": "string"},
+          "final_score": {"type": "integer", "minimum": 0, "maximum": 100},
+          "rank": {"type": "integer", "minimum": 1},
+          "reason": {"type": "string"}
+        }
+      }
+    },
+    "selected_submission_id": {"type": "string"},
+    "rubric_version": {"const": "round-final-v1"}
+  }
+}

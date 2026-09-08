@@ -1,0 +1,12 @@
+[Unit]
+Description=Poll RTX PRO 6000 temperature every 30 seconds
+
+[Timer]
+OnBootSec=30s
+OnUnitActiveSec=30s
+AccuracySec=1s
+Unit=crowdmovie-gpu-thermal-guard.service
+Persistent=true
+
+[Install]
+WantedBy=timers.target

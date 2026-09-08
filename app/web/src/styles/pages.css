@@ -1,0 +1,1768 @@
+/* Episodes, hall of fame, my scripts, how it works, contact, quick-start modal.
+   Ported from the approved mockup. */
+
+/* ---------- episodes ---------- */
+.ep-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+.ep-card {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  padding: 14px 15px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+  box-shadow: 5px 5px 0 var(--purple);
+}
+.ep-card:nth-child(3n + 2) {
+  box-shadow: 5px 5px 0 var(--teal);
+}
+.ep-card:nth-child(3n) {
+  box-shadow: 5px 5px 0 var(--pink);
+}
+/* Spec §12.1: the airing episode gets its own accent shadow. */
+.ep-card.live {
+  box-shadow: 5px 5px 0 var(--red);
+  background: #fffcf0;
+}
+.ep-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.ep-no {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 6px;
+  padding: 1px 9px;
+}
+.ep-state {
+  font: 600 10px var(--body);
+  border-radius: 99px;
+  padding: 1px 9px;
+  border: 1.5px solid var(--ink);
+}
+.ep-state.on {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
+}
+.ep-state.done {
+  background: var(--cream);
+  color: var(--ink-soft);
+}
+.ep-card h3 {
+  font-family: var(--disp);
+  font-weight: 800;
+  font-size: 19px;
+  line-height: 1.25;
+}
+.ep-card p {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.ep-meta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+.ep-meta b {
+  color: var(--ink);
+}
+.by {
+  font-size: 11.5px;
+  color: var(--ink-soft);
+}
+.by b {
+  color: var(--blue);
+  font-weight: 600;
+}
+.ep-open {
+  align-self: flex-start;
+  margin-top: 4px;
+  font: 700 12px var(--body);
+  border: 2px solid var(--ink);
+  border-radius: 9px;
+  background: var(--card);
+  padding: 4px 14px;
+  box-shadow: 2px 2px 0 var(--ink);
+  color: var(--ink);
+  text-decoration: none;
+  display: inline-block;
+}
+.ep-open:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+/* ---------- movie-grouped episode / character catalogues ---------- */
+.movie-catalog {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+}
+.movie-catalog-section {
+  min-width: 0;
+}
+.movie-catalog-head {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 16px;
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 15px;
+  box-shadow: 6px 6px 0 var(--purple);
+}
+.movie-catalog-section:nth-child(3n + 2) .movie-catalog-head {
+  box-shadow: 6px 6px 0 var(--teal);
+}
+.movie-catalog-section:nth-child(3n) .movie-catalog-head {
+  box-shadow: 6px 6px 0 var(--orange);
+}
+.movie-catalog-art {
+  width: 104px;
+  height: 104px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  border-radius: 11px;
+  background: linear-gradient(145deg, var(--teal), var(--purple));
+  color: #fff;
+  text-decoration: none;
+}
+.movie-catalog-art.mosaic {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 3px;
+  padding: 3px;
+  background: var(--ink);
+}
+.movie-catalog-art img {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  object-fit: cover;
+  display: block;
+}
+.movie-catalog-art b {
+  font: 800 28px var(--disp);
+}
+.movie-catalog-copy {
+  min-width: 0;
+}
+.movie-catalog-copy .eyebrow {
+  margin-bottom: 2px;
+}
+.movie-catalog-copy h3 {
+  font: 800 22px/1.25 var(--disp);
+  margin-bottom: 5px;
+}
+.movie-catalog-copy > p:last-of-type {
+  max-width: 82ch;
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+.movie-catalog-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 9px;
+}
+.movie-catalog-facts span {
+  padding: 1px 8px;
+  border: 1.5px solid var(--ink);
+  border-radius: 99px;
+  font: 700 9.5px var(--mono);
+  letter-spacing: 0.04em;
+  background: var(--cream);
+}
+.movie-catalog-open {
+  justify-self: end;
+  color: #fff;
+  background: var(--blue);
+  border: 2px solid var(--ink);
+  border-radius: 9px;
+  box-shadow: 3px 3px 0 var(--ink);
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.movie-catalog-content {
+  margin-top: 20px;
+}
+.catalog-empty {
+  margin: 18px 2px 0;
+}
+
+/* Each movie owns an independent board. Only that movie's episode rail scrolls
+   when the row grows beyond the viewport. */
+.episode-catalog-section {
+  overflow: hidden;
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 16px;
+  box-shadow: 7px 7px 0 var(--purple);
+  padding: 18px;
+}
+.episode-catalog-section:nth-child(3n + 2) {
+  box-shadow: 7px 7px 0 var(--teal);
+}
+.episode-catalog-section:nth-child(3n) {
+  box-shadow: 7px 7px 0 var(--orange);
+}
+.episode-catalog-section.movie-catalog-section .movie-catalog-head {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+.episode-strip {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ink-soft) transparent;
+  padding: 1px 7px 12px 1px;
+}
+.episode-strip > .ep-card {
+  flex: 0 0 clamp(290px, 31vw, 360px);
+  scroll-snap-align: start;
+}
+.episode-strip:focus-visible {
+  outline-offset: 4px;
+}
+
+@media (max-width: 700px) {
+  .movie-catalog-head {
+    grid-template-columns: 84px minmax(0, 1fr);
+    gap: 13px;
+    padding: 12px;
+  }
+  .movie-catalog-art {
+    width: 84px;
+    height: 84px;
+  }
+  .movie-catalog-copy h3 {
+    font-size: 18px;
+  }
+  .movie-catalog-copy > p:last-of-type {
+    display: none;
+  }
+  .movie-catalog-open {
+    grid-column: 1 / -1;
+    justify-self: stretch;
+    text-align: center;
+    min-height: 44px;
+    display: grid;
+    place-items: center;
+  }
+  .episode-catalog-section {
+    padding: 14px 12px 16px;
+  }
+  .episode-strip > .ep-card {
+    flex-basis: min(82vw, 320px);
+  }
+}
+.premise {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 5px 5px 0 var(--hl);
+  padding: 16px 18px;
+  margin-bottom: 22px;
+}
+.premise h4 {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+.premise p {
+  font-size: 14px;
+  line-height: 1.7;
+}
+.sublist {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 5px 5px 0 var(--blue);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* ---------- generic boards / tables ---------- */
+.board {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 5px 5px 0 var(--teal);
+  overflow: hidden;
+}
+.board.blue {
+  box-shadow: 5px 5px 0 var(--blue);
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 15px;
+  font-size: 13.5px;
+  border-top: 1px solid rgba(29, 24, 20, 0.12);
+}
+.row:first-child {
+  border-top: 0;
+}
+.row .rank {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  width: 26px;
+  flex-shrink: 0;
+}
+.row .rank.top {
+  color: var(--red);
+}
+.row .nm {
+  font-weight: 700;
+  color: var(--blue);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.row .sp {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.row .num {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.row .num b {
+  color: var(--ink);
+}
+.medal {
+  font: 600 9.5px var(--mono);
+  background: var(--hl);
+  border: 1.5px solid var(--ink);
+  border-radius: 99px;
+  padding: 0 7px;
+  white-space: nowrap;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.stat {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: 4px 4px 0 var(--orange);
+}
+.stat:nth-child(2) {
+  box-shadow: 4px 4px 0 var(--teal);
+}
+.stat:nth-child(3) {
+  box-shadow: 4px 4px 0 var(--pink);
+}
+.stat:nth-child(4) {
+  box-shadow: 4px 4px 0 var(--purple);
+}
+.stat:nth-child(5) {
+  box-shadow: 4px 4px 0 var(--blue);
+}
+.stat .k {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+}
+.stat .v {
+  font-family: var(--mono);
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* ---------- how it works ---------- */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+  margin-bottom: 26px;
+}
+.step {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  padding: 13px 15px;
+  box-shadow: 4px 4px 0 var(--teal);
+}
+.step:nth-child(2n) {
+  box-shadow: 4px 4px 0 var(--pink);
+}
+.step:nth-child(3n) {
+  box-shadow: 4px 4px 0 var(--purple);
+}
+.step .n {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--red);
+  letter-spacing: 0.1em;
+}
+.step h4 {
+  font-size: 14.5px;
+  font-weight: 700;
+  margin: 3px 0 5px;
+}
+.step p {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.rules {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 5px 5px 0 var(--hl);
+  overflow: hidden;
+  margin-bottom: 26px;
+}
+.rules .row .k {
+  font-weight: 600;
+  width: 170px;
+  flex-shrink: 0;
+}
+.rules .row .d {
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+
+/* ---------- forms ---------- */
+.form-card {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 16px;
+  box-shadow: 7px 7px 0 var(--teal);
+  padding: 20px 22px 22px;
+  width: min(620px, 100%);
+}
+.form-card select,
+.form-card textarea {
+  width: 100%;
+  font: 500 14px var(--body);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  padding: 9px 13px;
+  background: var(--card);
+}
+.form-card select {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%231D1814' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 13px center;
+  padding-right: 36px;
+}
+.form-card textarea {
+  resize: vertical;
+  min-height: 132px;
+  line-height: 1.65;
+}
+.form-card select:focus,
+.form-card textarea:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 3px 3px 0 var(--blue);
+}
+.form-foot {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.form-foot .count {
+  margin-right: auto;
+}
+.as-who {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+.as-who b {
+  color: var(--blue);
+}
+.sent {
+  background: #e8f8f2;
+  border: 2px solid var(--teal);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+.sent b {
+  font-weight: 700;
+}
+/* Teal action button, shared by the contact form and the modal's second slot. */
+.btn-teal {
+  background: var(--teal);
+  color: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  font: 700 14px var(--body);
+  padding: 9px 26px;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.btn-teal:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+.btn-teal[disabled] {
+  background: var(--ink-soft);
+  cursor: not-allowed;
+}
+
+.field {
+  margin-bottom: 13px;
+}
+.field label {
+  display: block;
+  font: 600 12px var(--body);
+  margin-bottom: 5px;
+}
+/* The "optional" badge sitting after a field's label text. */
+.opt {
+  font: 600 10px var(--mono);
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  border: 1.5px solid rgba(29, 24, 20, 0.3);
+  border-radius: 99px;
+  padding: 0 7px;
+  margin-left: 6px;
+  vertical-align: 1px;
+}
+.field input {
+  width: 100%;
+  font: 500 14.5px var(--body);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  padding: 9px 13px;
+  background: var(--card);
+}
+.field input:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 3px 3px 0 var(--blue);
+}
+.field .note {
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+  line-height: 1.55;
+}
+.field .err {
+  font-size: 11px;
+  color: var(--red);
+  margin-top: 4px;
+}
+.field.bad input,
+.field.bad textarea {
+  border-color: var(--red);
+}
+.upgrade {
+  background: #f1edff;
+  border-left: 3px solid var(--purple);
+  border-radius: 0 8px 8px 0;
+  padding: 9px 12px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+.upgrade b {
+  color: var(--purple);
+}
+
+/* ---------- quick-start modal (spec §2.5) ---------- */
+.scrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(29, 24, 20, 0.55);
+  display: grid;
+  place-items: center;
+  z-index: 50;
+  padding: 20px;
+}
+.modal {
+  position: relative;
+  background: var(--card);
+  border: 3px solid var(--ink);
+  border-radius: 16px;
+  box-shadow: 9px 9px 0 var(--purple);
+  padding: 24px 26px 26px;
+  width: min(460px, 100%);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+}
+.modal h3 {
+  font-family: var(--disp);
+  font-weight: 800;
+  font-size: 23px;
+  margin-bottom: 5px;
+  padding-right: 34px;
+}
+.modal .sub {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+  margin-bottom: 16px;
+}
+.modal .x {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 2px solid var(--ink);
+  border-radius: 9px;
+  background: var(--card);
+  display: grid;
+  place-items: center;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+.modal .x:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+.modal .acts {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.modal .acts .primary {
+  flex: 1;
+  min-width: 150px;
+  background: var(--ink);
+  color: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  font: 700 14px var(--body);
+  padding: 9px 14px;
+  box-shadow: 3px 3px 0 var(--blue);
+}
+.modal .acts .secondary {
+  flex: 1;
+  min-width: 120px;
+  background: var(--teal);
+  color: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  font: 700 14px var(--body);
+  padding: 9px 14px;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+/* Once the account fields are revealed the second button is the user action. */
+.modal.reg-open .acts .secondary {
+  background: var(--blue);
+}
+.modal .acts .primary:active,
+.modal .acts .secondary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+.modal .acts button[disabled] {
+  background: var(--ink-soft);
+  cursor: not-allowed;
+}
+.modal .warn {
+  font-size: 11px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin-top: 13px;
+}
+.modal .formerr {
+  font-size: 12px;
+  color: var(--red);
+  font-weight: 600;
+  margin-top: 12px;
+  line-height: 1.6;
+}
+.modal .full {
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+  background: none;
+  border: 0;
+  width: 100%;
+  font: 600 12px var(--body);
+  color: var(--blue);
+}
+
+/* ---------- contact rail ---------- */
+/* Spec §2.5: the rail answers the questions that would otherwise arrive as a
+   message, so it sits beside the form instead of under it. */
+.ct-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 620px) minmax(0, 460px);
+  gap: 30px;
+  align-items: start;
+}
+.ct-side {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.side-card {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 5px 5px 0 var(--purple);
+  padding: 13px 15px 14px;
+}
+.side-card.reply {
+  box-shadow: 5px 5px 0 var(--orange);
+}
+.side-h {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  color: var(--ink-soft);
+  margin-bottom: 9px;
+}
+.side-row {
+  display: block;
+  padding: 9px 0;
+  border-top: 1px solid rgba(29, 24, 20, 0.12);
+  color: var(--ink);
+  text-decoration: none;
+}
+.side-row:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+.side-row .q {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.side-row .a {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--blue);
+}
+.side-row .a::after {
+  content: " \2192";
+}
+.side-card.reply p {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+  margin-top: 8px;
+}
+.side-card.reply p:first-of-type {
+  margin-top: 0;
+}
+.ct-side .disclaimer {
+  margin-top: 0;
+}
+
+/* The header collapses to one column here; the form and its rail follow. */
+@media (max-width: 1000px) {
+  .ct-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .ct-side {
+    max-width: 620px;
+  }
+}
+
+@media (max-width: 560px) {
+  .rules .row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  .rules .row .k {
+    width: auto;
+  }
+  .btn-teal,
+  .ep-open,
+  .modal .acts button {
+    min-height: 44px;
+  }
+}
+
+/* ---------- story bibles: board, detail, editor (规范 §6) ---------- */
+/* A forum for an animation community: a list of threads to browse, one
+   thread to read and reply in, and the form that starts one. */
+
+/* ---------- board (StoriesView, .sb-*) ---------- */
+.sb-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.sb-sort-hot,
+.sb-sort-new {
+  font: 600 12.5px var(--body);
+  border: 2px solid var(--ink);
+  border-radius: 99px;
+  background: var(--card);
+  padding: 6px 16px;
+  color: var(--ink-soft);
+}
+.sb-sort-hot.on,
+.sb-sort-new.on {
+  background: var(--ink);
+  color: #fff;
+}
+.sb-spacer {
+  flex: 1;
+}
+/* The one blue button on the board: composing is the reader's own action. */
+.sb-compose {
+  background: var(--blue);
+  color: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 9px;
+  font: 700 12.5px var(--body);
+  padding: 7px 16px;
+  box-shadow: 2px 2px 0 var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.sb-compose:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+.sb-board {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 5px 5px 0 var(--teal);
+  overflow: hidden;
+}
+.sb-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-top: 1px solid rgba(29, 24, 20, 0.12);
+  color: var(--ink);
+  text-decoration: none;
+}
+.sb-row-hit {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+}
+.sb-row-hit:focus-visible {
+  outline: 4px solid var(--blue);
+  outline-offset: -5px;
+}
+.sb-row:first-child {
+  border-top: 0;
+}
+.sb-row:hover {
+  background: #fbf7ec;
+}
+/* All character and place pictures sit to the right of the story metadata.
+   Each thumbnail keeps its own square frame and a small breathing gap. */
+.sb-thumbs {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: none;
+  grid-template-rows: 72px;
+  grid-auto-flow: column;
+  grid-auto-columns: 72px;
+  gap: 8px;
+  width: auto;
+  max-width: calc(100% - 220px);
+  height: 72px;
+  min-width: 0;
+  flex-shrink: 1;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  pointer-events: auto;
+}
+.sb-thumb-open {
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border: 2px solid var(--ink);
+  border-radius: 9px;
+  background: var(--cream);
+  overflow: hidden;
+  cursor: zoom-in;
+  pointer-events: auto;
+}
+.sb-thumb-open:focus-visible {
+  outline: 4px solid var(--blue);
+  outline-offset: -4px;
+  position: relative;
+  z-index: 2;
+}
+.sb-thumbs img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+.sb-meta {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+  pointer-events: none;
+}
+.sb-title {
+  font-family: var(--disp);
+  font-weight: 800;
+  font-size: 15.5px;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.sb-by {
+  font-size: 11.5px;
+  color: var(--ink-soft);
+}
+.sb-counts {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 900px) {
+  .sb-thumbs {
+    grid-template-columns: none;
+    grid-template-rows: repeat(2, 32px);
+    grid-auto-flow: column;
+    grid-auto-columns: 32px;
+    max-width: 60%;
+  }
+}
+
+@media (max-width: 560px) {
+  .sb-thumbs {
+    grid-template-columns: none;
+    grid-template-rows: repeat(2, 24px);
+    grid-auto-columns: 24px;
+    max-width: 55%;
+    height: 56px;
+  }
+  .sb-row {
+    padding: 10px 14px;
+    gap: 12px;
+  }
+  .sb-sort-hot,
+  .sb-sort-new,
+  .sb-compose {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* ---------- detail (StoryDetailView, .sd-*) ---------- */
+.sd-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  background: none;
+  font: 600 12.5px var(--body);
+  color: var(--blue);
+  text-decoration: none;
+  padding: 4px 0;
+  margin-bottom: 14px;
+}
+.sd-post {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 16px;
+  box-shadow: 6px 6px 0 var(--purple);
+  padding: 22px 24px 26px;
+}
+.sd-post > .ptitle {
+  margin-top: 0;
+}
+.sd-by {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  margin-bottom: 16px;
+}
+/* Keep the author's paragraph breaks rather than collapsing them to one block. */
+.sd-synopsis {
+  font-size: 14.5px;
+  line-height: 1.85;
+  white-space: pre-line;
+  margin-bottom: 22px;
+}
+.sd-group {
+  font-family: var(--disp);
+  font-weight: 800;
+  font-size: 16.5px;
+  margin: 26px 0 12px;
+  padding-top: 20px;
+  border-top: 2px dashed rgba(29, 24, 20, 0.18);
+}
+.sd-post > .sd-group:first-of-type {
+  margin-top: 4px;
+}
+.sd-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 22px;
+}
+/* Spec §8.4: a static display element, same rule as the character cards —
+   no hover transform or shadow shift. */
+.sd-figure {
+  background: var(--cream);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.sd-figure:nth-child(4n + 1) {
+  box-shadow: 4px 4px 0 var(--teal);
+}
+.sd-figure:nth-child(4n + 2) {
+  box-shadow: 4px 4px 0 var(--orange);
+}
+.sd-figure:nth-child(4n + 3) {
+  box-shadow: 4px 4px 0 var(--pink);
+}
+.sd-figure:nth-child(4n) {
+  box-shadow: 4px 4px 0 var(--purple);
+}
+.sd-image-open {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: var(--card);
+  cursor: zoom-in;
+}
+.sd-image-open:focus-visible {
+  outline: 4px solid var(--blue);
+  outline-offset: -4px;
+}
+.sd-figure img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  border-bottom: 2px solid var(--ink);
+  background: var(--card);
+}
+
+/* ---------- story image lightbox ---------- */
+.sil-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(20, 17, 15, 0.86);
+  backdrop-filter: blur(6px);
+}
+.sil-dialog {
+  position: relative;
+  width: min(1180px, calc(100vw - 48px));
+  height: min(900px, calc(100vh - 48px));
+  display: grid;
+  grid-template-columns: 68px minmax(0, 1fr) 68px;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 14px;
+  padding: 20px;
+  background: var(--cream);
+  border: 3px solid var(--ink);
+  border-radius: 20px;
+  box-shadow: 10px 10px 0 var(--purple);
+  outline: none;
+}
+.sil-stage {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+}
+.sil-stage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  object-fit: contain;
+}
+.sil-arrow,
+.sil-close {
+  border: 2px solid var(--ink);
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.sil-arrow {
+  align-self: center;
+  width: 54px;
+  height: 70px;
+  border-radius: 14px;
+  font: 800 42px/1 var(--disp);
+}
+.sil-prev {
+  grid-column: 1;
+  grid-row: 1;
+}
+.sil-next {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+}
+.sil-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  font: 800 24px/1 var(--body);
+}
+.sil-arrow:active,
+.sil-close:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+.sil-arrow:focus-visible,
+.sil-close:focus-visible {
+  outline: 4px solid var(--blue);
+  outline-offset: 2px;
+}
+.sil-caption {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 12px;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.sil-caption p {
+  max-height: 4.65em;
+  overflow-y: auto;
+}
+.sil-caption b,
+.sil-kind {
+  font-family: var(--mono);
+  font-size: 11px;
+  white-space: nowrap;
+}
+.sil-caption b {
+  color: var(--ink-soft);
+}
+.sil-kind {
+  padding: 2px 9px;
+  border: 1.5px solid var(--ink);
+  border-radius: 99px;
+  background: var(--teal);
+  color: #fff;
+}
+
+@media (max-width: 700px) {
+  .sil-backdrop {
+    padding: 10px;
+  }
+  .sil-dialog {
+    width: calc(100vw - 20px);
+    height: calc(100vh - 20px);
+    grid-template-columns: 44px minmax(0, 1fr) 44px;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 14px;
+    box-shadow: 5px 5px 0 var(--purple);
+  }
+  .sil-stage {
+    grid-column: 1 / -1;
+  }
+  .sil-arrow {
+    position: relative;
+    z-index: 1;
+    width: 42px;
+    height: 58px;
+    background: rgba(255, 255, 255, 0.9);
+  }
+  .sil-prev {
+    grid-column: 1;
+  }
+  .sil-next {
+    grid-column: 3;
+  }
+  .sil-caption {
+    grid-template-columns: auto 1fr;
+  }
+  .sil-caption p {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+/* The note lives inside the same bordered card as its picture, so it can
+   never be read as belonging to the one next to it. */
+.sd-figure figcaption {
+  padding: 8px 10px 9px;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.sd-like {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: 700 13.5px var(--body);
+  border: 2px solid var(--ink);
+  border-radius: 99px;
+  background: var(--card);
+  color: var(--ink);
+  padding: 8px 20px;
+  box-shadow: 3px 3px 0 var(--ink);
+  margin-bottom: 6px;
+}
+.sd-like:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+/* A like is the reader's own vote — the spec's blue, same as a name. */
+.sd-like.on {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
+}
+.sd-replies {
+  list-style: none;
+}
+/* The floor number is the visible ordinal; the <ol> itself stays
+   unmarked so a reply is never numbered twice. */
+.sd-reply {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 2px 10px;
+  padding: 11px 2px;
+  border-top: 1px solid rgba(29, 24, 20, 0.12);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+.sd-reply:first-child {
+  border-top: 0;
+}
+.sd-floor {
+  grid-row: 1 / 3;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  padding-top: 2px;
+}
+.sd-name {
+  grid-column: 2;
+  color: var(--blue);
+  font-weight: 700;
+  font-size: 13px;
+}
+.sd-text {
+  grid-column: 2;
+  color: var(--ink);
+}
+/* Textarea always takes the full row so the count and send button share
+   a footer line beneath it without a wrapper div. */
+.sd-composer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin-top: 14px;
+}
+.sd-composer textarea {
+  flex: 1 1 100%;
+  font: 500 14px var(--body);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  padding: 11px 14px;
+  line-height: 1.6;
+  resize: vertical;
+  min-height: 78px;
+  background: var(--card);
+}
+.sd-composer textarea:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 3px 3px 0 var(--blue);
+}
+.sd-count {
+  margin-right: auto;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--blue);
+}
+.sd-count.over b {
+  color: var(--red);
+}
+.sd-send {
+  background: var(--blue);
+  color: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  font: 700 13.5px var(--body);
+  padding: 8px 22px;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.sd-send:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+.sd-send:disabled {
+  background: var(--ink-soft);
+  cursor: not-allowed;
+}
+
+@media (max-width: 560px) {
+  .sd-post {
+    padding: 16px 16px 20px;
+  }
+  .sd-gallery {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+  }
+  .sd-like,
+  .sd-send {
+    min-height: 44px;
+  }
+}
+
+/* ---------- editor (StoryComposeView, .sc-*) ---------- */
+/* The rejected / review-failed panels reuse .empty.bad: a red headline is
+   the verdict, the reason underneath stays ink-soft so it reads as an
+   explanation and not a second alarm. */
+.sc-reason {
+  display: block;
+  max-width: 56ch;
+  margin: 8px auto 0;
+  line-height: 1.7;
+}
+.sc-reopen {
+  display: block;
+  margin: 14px auto 0;
+  background: var(--blue);
+  color: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  font: 700 13px var(--body);
+  padding: 8px 20px;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.sc-reopen:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.sc-form {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 16px;
+  box-shadow: 7px 7px 0 var(--pink);
+  padding: 22px 24px 26px;
+  width: min(920px, 100%);
+}
+.sc-label {
+  display: block;
+  font: 600 12px var(--body);
+  margin-bottom: 5px;
+}
+#sc-title {
+  width: 100%;
+  font: 500 15px var(--body);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  padding: 10px 14px;
+  background: var(--card);
+  margin-bottom: 18px;
+}
+#sc-synopsis {
+  width: 100%;
+  font: 500 14.5px var(--body);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  padding: 12px 14px;
+  line-height: 1.75;
+  resize: vertical;
+  min-height: 260px;
+  background: var(--card);
+}
+#sc-title:focus,
+#sc-synopsis:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 3px 3px 0 var(--blue);
+}
+.sc-count {
+  margin: 7px 0 0;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--blue);
+  text-align: right;
+}
+.sc-count.over {
+  color: var(--red);
+}
+.sc-group {
+  font-family: var(--disp);
+  font-weight: 800;
+  font-size: 16px;
+  margin: 26px 0 14px;
+  padding-top: 20px;
+  border-top: 2px dashed rgba(29, 24, 20, 0.18);
+}
+.sc-slots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+/* Nothing is wrong yet, so this is orange (frame decoration) and never
+   red (the AI's ink) — a checklist, not an error. */
+.sc-blocking {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  background: #fff4e8;
+  border: 2px solid var(--orange);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin: 24px 0;
+}
+.sc-blocking b {
+  flex-basis: 100%;
+  font-family: var(--disp);
+  font-weight: 800;
+  font-size: 13px;
+}
+.sc-blocking span {
+  font: 600 12px var(--body);
+  color: var(--ink);
+  background: var(--card);
+  border: 1.5px solid var(--orange);
+  border-radius: 99px;
+  padding: 3px 12px;
+}
+.sc-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 2px solid rgba(29, 24, 20, 0.12);
+}
+.sc-sync {
+  margin-right: auto;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+.sc-submit {
+  background: var(--blue);
+  color: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  font: 700 14.5px var(--body);
+  padding: 10px 28px;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.sc-submit:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+.sc-submit:disabled {
+  background: var(--ink-soft);
+  cursor: not-allowed;
+}
+
+/* ---------- one upload slot (StoryImageSlot.vue) ---------- */
+.sc-slot {
+  background: var(--cream);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.sc-drop {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 2px dashed var(--ink);
+  border-radius: 10px;
+  background: var(--card);
+  overflow: hidden;
+  cursor: pointer;
+}
+/* The file input itself is the a11y target (opacity 0, not display:none),
+   so focus has to be shown on the box around it instead. */
+.sc-drop:focus-within {
+  outline: 3px solid var(--blue);
+  outline-offset: 2px;
+}
+.sc-drop input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.sc-drop input[type="file"]:disabled {
+  cursor: not-allowed;
+}
+.sc-drop:has(input:disabled) {
+  opacity: 0.6;
+}
+.sc-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.sc-add {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
+  font: 600 12px var(--body);
+  color: var(--ink-soft);
+}
+.sc-caption {
+  width: 100%;
+  font: 400 12.5px var(--body);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  padding: 7px 9px;
+  line-height: 1.5;
+  resize: vertical;
+  min-height: 56px;
+  background: var(--card);
+}
+.sc-caption:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 2px 2px 0 var(--blue);
+}
+.sc-caption:disabled {
+  background: var(--cream);
+  color: var(--ink-soft);
+  cursor: not-allowed;
+}
+.sc-caption-count {
+  align-self: flex-end;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--blue);
+}
+.sc-caption-count.over {
+  color: var(--red);
+}
+.sc-remove {
+  align-self: flex-start;
+  border: 0;
+  background: none;
+  font: 600 11px var(--body);
+  color: var(--ink-soft);
+  text-decoration: underline;
+  padding: 0;
+}
+.sc-remove:hover {
+  color: var(--ink);
+}
+
+@media (max-width: 1000px) {
+  .sc-slots {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .sc-form {
+    padding: 16px 16px 20px;
+  }
+  .sc-slots {
+    grid-template-columns: 1fr;
+  }
+  .sc-reopen,
+  .sc-submit {
+    min-height: 44px;
+  }
+}
+
+/* ---------- my scripts: story bibles (MyScriptsView, .ms-*) ---------- */
+.ms-stories {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 5px 5px 0 var(--orange);
+  padding: 6px 18px 14px;
+  margin-top: 28px;
+}
+.ms-stories > .ptitle {
+  font-size: 18px;
+  margin: 14px 0 4px;
+}
+.ms-story {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px 10px;
+  padding: 13px 2px;
+  border-top: 1px solid rgba(29, 24, 20, 0.12);
+  font-size: 13.5px;
+}
+.ms-story:first-child {
+  border-top: 0;
+}
+.ms-story-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.ms-story-status {
+  display: inline-block;
+  font: 600 10.5px var(--mono);
+  letter-spacing: 0.04em;
+  border: 1.5px solid var(--ink);
+  border-radius: 99px;
+  padding: 2px 10px;
+  white-space: nowrap;
+}
+/* Nothing has happened yet, so draft is the quietest badge on the row —
+   same cream-on-card the ended episodes use. */
+.ms-story-status.draft {
+  background: var(--cream);
+  color: var(--ink-soft);
+}
+.ms-story-status.pending {
+  background: var(--orange);
+  color: var(--ink);
+}
+/* Approved is canon in the making — the spec's --hl, same ink as an
+   accepted pitch's medal. */
+.ms-story-status.approved {
+  background: var(--hl);
+  color: var(--ink);
+}
+/* Rejected is the AI's verdict spoken back to the author — the spec's red,
+   same ink as a score or a roast. */
+.ms-story-status.rejected {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
+}
+/* Review-failed is not a verdict, just an unfinished pass — kept off both
+   red and --hl on purpose, so it never reads as a no. */
+.ms-story-status.review_failed {
+  background: var(--purple);
+  color: #fff;
+  border-color: var(--purple);
+}
+/* The refusal reason is the point of showing this row at all: readable
+   prose on its own line, not a second badge shouting over the first. */
+.ms-story-reason {
+  flex-basis: 100%;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+.ms-story > a {
+  flex-basis: 100%;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--blue);
+  text-decoration: none;
+  margin-top: 2px;
+}
+.ms-story > a::after {
+  content: " \2192";
+}
+.ms-story > a:hover {
+  text-decoration: underline;
+}

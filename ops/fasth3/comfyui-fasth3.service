@@ -1,0 +1,21 @@
+[Unit]
+Description=CrowdMovie ComfyUI H3 runtime
+After=network-online.target
+Wants=network-online.target
+Conflicts=comfyui.service
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/comfyui-fasth3/ComfyUI
+Environment=PYTHONUNBUFFERED=1
+Environment=CUDA_HOME=/usr/local/cuda
+Environment=PATH=/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ExecStart=/opt/comfyui-fasth3/venv/bin/python main.py --listen 127.0.0.1 --port 8188 --disable-auto-launch --disable-pinned-memory --disable-dynamic-vram --reserve-vram 20 --disable-smart-memory --extra-model-paths-config /opt/comfyui-fasth3/extra_model_paths.yaml --input-directory /opt/comfyui-fasth3/ComfyUI/input --output-directory /opt/comfyui-fasth3/ComfyUI/output --user-directory /opt/comfyui-fasth3/ComfyUI/user
+Restart=no
+TimeoutStartSec=180
+TimeoutStopSec=180
+KillSignal=SIGINT
+SuccessExitStatus=0 130
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,2 @@
+ALTER TABLE "episodes" ADD CONSTRAINT "episodes_theme_source_submission_id_submissions_id_fk" FOREIGN KEY ("theme_source_submission_id") REFERENCES "public"."submissions"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "rounds" ADD CONSTRAINT "rounds_selected_submission_id_submissions_id_fk" FOREIGN KEY ("selected_submission_id") REFERENCES "public"."submissions"("id") ON DELETE no action ON UPDATE no action;

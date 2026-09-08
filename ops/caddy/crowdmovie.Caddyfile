@@ -1,0 +1,45 @@
+{$CROWDMOVIE_DOMAIN:movie.example.com} {
+	encode zstd gzip
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Content-Security-Policy "default-src 'self'; img-src 'self' data:; media-src 'self' blob: https://interactive-examples.mdn.mozilla.net; font-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'"
+		-Server
+	}
+	# Keep Cloudflare from rewriting our strict-CSP SPA documents with injected
+	# analytics/detection scripts. Static assets, API and media keep their own
+	# cache/compression behaviour.
+	@spaDocument not path /api/* /healthz /share/* /media/* /assets/* /fonts/* /favicon.ico /favicon-32.png /apple-touch-icon.png
+	header @spaDocument Cache-Control "public, no-transform"
+	# Caddy cleans dot segments before ordinary path matching. Match the original
+	# request path instead so `/media/../...` and percent-encoded dot segments
+	# cannot fall through to the SPA's `/index.html` fallback as a misleading 200.
+	@mediaTraversal vars_regexp mediaTraversal {http.request.orig_uri.path} (?i)^/media/([^/]+/)*(\.|%2e){2}(/|$)
+	handle @mediaTraversal {
+		respond 404
+	}
+	handle /healthz {
+		reverse_proxy 127.0.0.1:3100
+	}
+	# Social crawlers need Fastify's server-rendered OG document; the Vue SPA
+	# cannot provide metadata before JavaScript executes.
+	handle /share/* {
+		reverse_proxy 127.0.0.1:3100
+	}
+	handle /api/* {
+		reverse_proxy 127.0.0.1:3100 {
+			# Add verified CDN/private proxy CIDRs locally if your ingress needs them.
+		}
+	}
+	handle_path /media/* {
+		root * /var/lib/crowdmovie/media
+		file_server
+	}
+	handle {
+		root * /opt/crowdmovie/app/web/dist
+		try_files {path} /index.html
+		file_server
+	}
+}

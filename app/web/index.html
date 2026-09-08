@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CrowdAIMovie</title>
+    <meta
+      name="description"
+      content="A movie written by everyone. Write the next 15 seconds, vote on everyone else's, and watch the AI shoot the winner."
+    />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Self-hosted, no third-party CDN. Loading the CJK sheet as an ordinary
+         stylesheet keeps the document compatible with a strict CSP: no inline
+         onload handler is needed, and unicode-range still limits font files to
+         glyphs actually used by the page. -->
+    <link rel="stylesheet" href="/fonts/fonts-latin.css" />
+    <link rel="stylesheet" href="/fonts/fonts-cjk.css" />
+    <link rel="stylesheet" href="/whos-next-title-88f57667.css" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

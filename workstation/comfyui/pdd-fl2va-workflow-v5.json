@@ -1,0 +1,16 @@
+{
+  "version": "h3-pdd8-t2va-workflow-v5",
+  "mode": "stateless_t2va",
+  "capabilities_version": "h3-capabilities-v5",
+  "workflow_path": "ops/fasth3/workflow_api.json",
+  "node_count": 15,
+  "first_frame": false,
+  "last_frame": false,
+  "motion_context": false,
+  "external_lora": false,
+  "model": "minimax_h3_fl2va_int8_convrot.safetensors",
+  "pdd_file": "MiniMax-H3-FL2VA-Acc-8Step.safetensors",
+  "nfe": "8",
+  "resolution": [1344, 768],
+  "fps": 24
+}

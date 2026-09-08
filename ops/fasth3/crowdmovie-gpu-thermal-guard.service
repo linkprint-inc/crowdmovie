@@ -1,0 +1,19 @@
+[Unit]
+Description=Adjust RTX PRO 6000 power limit by GPU temperature
+Requires=nvidia-power-limit.service
+After=nvidia-power-limit.service
+ConditionPathExists=/dev/nvidia0
+
+[Service]
+Type=oneshot
+Environment=GPU_INDEX=0
+Environment=BASE_POWER_LIMIT_W=500
+Environment=MIN_POWER_LIMIT_W=150
+Environment=POWER_STEP_W=25
+Environment=REDUCE_ABOVE_C=82
+Environment=RESTORE_AT_OR_BELOW_C=78
+ExecStart=/usr/local/sbin/crowdmovie-gpu-thermal-guard
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict

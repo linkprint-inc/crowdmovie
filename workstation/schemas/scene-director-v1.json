@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "scene-director-v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["selected_submission_id", "credit_username", "scene_summary_zh", "duration_seconds", "continuity_from_previous", "shot_relation", "use_previous_end_frame", "use_motion_context", "h3_prompt_en", "dialogue_en", "continuity_updates", "episode_should_end", "episode_end_reason", "comfyui_workflow", "comfyui_capabilities_version", "director_schema_version"],
+  "properties": {
+    "selected_submission_id": {"type": ["string", "null"]},
+    "credit_username": {"type": ["string", "null"]},
+    "scene_summary_zh": {"type": "string"},
+    "duration_seconds": {"type": "number", "minimum": 5, "maximum": 15},
+    "continuity_from_previous": {"type": "string"},
+    "shot_relation": {"enum": ["continuous_event", "new_shot"]},
+    "use_previous_end_frame": {"type": "boolean"},
+    "use_motion_context": {"type": "boolean", "const": false},
+    "h3_prompt_en": {
+      "type": "string",
+      "description": "Complete MiniMax H3 T2VA or controlled previous-tail I2VA prompt, at most 2000 English words. Use integrated_multimodal_description, overall_soundscape, and non_diegetic_music in order. I2VA begins with the exact Picture 1 alignment line. Characters and backgrounds use an ultra-realistic Elden Ring-style dark-fantasy 3D game environment and action uses restrained, weighty Soulslike direction. A replacement fighter may enter only after the old fighter is visibly launched completely out of frame. Each dialogue_en line appears exactly once and verbatim inside <d>[English] ...</d>."
+    },
+    "dialogue_en": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["speaker", "start_seconds", "end_seconds", "line"],
+        "properties": {
+          "speaker": {"type": "string"},
+          "start_seconds": {"type": "number", "minimum": 0},
+          "end_seconds": {"type": "number", "exclusiveMinimum": 0},
+          "line": {"type": "string"}
+        }
+      }
+    },
+    "continuity_updates": {"type": "array", "items": {"type": "string"}},
+    "episode_should_end": {"type": "boolean"},
+    "episode_end_reason": {"type": ["string", "null"]},
+    "comfyui_workflow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["prompt"],
+      "properties": {
+        "prompt": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["class_type", "inputs"],
+            "properties": {
+              "class_type": {"type": "string"},
+              "inputs": {"type": "object"}
+            }
+          }
+        }
+      }
+    },
+    "comfyui_capabilities_version": {"const": "h3-capabilities-v5"},
+    "director_schema_version": {"const": "scene-director-v1"}
+  }
+}

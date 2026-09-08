@@ -1,0 +1,24 @@
+{
+  "name": "crowdmovie",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "server",
+    "web"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "npm -w server run test",
+    "lint": "npm -w server run lint",
+    "typecheck": "npm -w server run typecheck",
+    "acceptance": "bash ../ops/acceptance.sh"
+  },
+  "devDependencies": {
+    "eslint": "^10.9.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.68.0"
+  }
+}

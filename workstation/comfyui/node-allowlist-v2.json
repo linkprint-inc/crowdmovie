@@ -1,0 +1,6 @@
+{
+  "version": "h3-node-allowlist-v2",
+  "required_counts": {"UNETLoader":1,"CLIPLoader":1,"VAELoader":2,"MiniMaxH3SigmaShift":1,"MiniMaxH3PDDAccApply":1,"LoraLoaderModelOnly":1,"MiniMaxH3ImageToVideo":1,"KSamplerSelect":1,"RandomNoise":1,"BasicGuider":1,"SamplerCustomAdvanced":1,"VAEDecode":1,"VAEDecodeAudio":1,"CreateVideo":1,"SaveVideo":1},
+  "optional_counts": {"LoadImage":[0,1]},
+  "forbidden_categories": ["network","shell","script","file-delete","arbitrary-file-read","custom-model-download"]
+}

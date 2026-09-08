@@ -1,0 +1,23 @@
+[Unit]
+Description=CrowdAIMovie web API
+Wants=network-online.target
+After=network-online.target postgresql.service
+
+[Service]
+User=crowdmovie
+WorkingDirectory=/opt/crowdmovie/app
+EnvironmentFile=/etc/crowdmovie/web.env
+Environment=SERVICE_ROLE=web
+ExecStart=/usr/bin/node server/dist/index.js
+Restart=always
+RestartSec=3
+MemoryMax=1500M
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/lib/crowdmovie
+PrivateTmp=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+
+[Install]
+WantedBy=multi-user.target

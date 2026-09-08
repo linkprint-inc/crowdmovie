@@ -1,0 +1,121 @@
+{
+  "1": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "minimax_h3_fl2va_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "2": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
+      "type": "minimax",
+      "device": "default"
+    }
+  },
+  "3": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+    }
+  },
+  "4": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+    }
+  },
+  "5": {
+    "class_type": "MiniMaxH3SigmaShift",
+    "inputs": {
+      "model": ["1", 0],
+      "shift_video": 12.0,
+      "shift_audio": 3.0
+    }
+  },
+  "6": {
+    "class_type": "MiniMaxH3PDDAccApply",
+    "inputs": {
+      "model": ["5", 0],
+      "pdd_file": "MiniMax-H3-FL2VA-Acc-8Step.safetensors",
+      "nfe": "8",
+      "lora_strength": 1.0,
+      "head_strength": 1.0,
+      "on_off_grid": "error",
+      "partition": "",
+      "enabled": true
+    }
+  },
+  "7": {
+    "class_type": "MiniMaxH3ImageToVideo",
+    "inputs": {
+      "clip": ["2", 0],
+      "vae": ["3", 0],
+      "prompt": "summary:\nSpider-Man and Batman collide in an eight-second rooftop duel inside a crisp high-detail 3D fighting-game arena at night.\n\ndetailed_description:\nA stabilized medium-wide gameplay camera tracks slowly sideways while keeping the entire rain-slick rooftop stage sharp and readable: detailed brick parapets, steel vents, antenna towers, wet tile seams, distant illuminated skyscrapers, and layered storm clouds remain in clear focus. Spider-Man swings low into frame and launches a fast flying kick. Batman blocks with his armored forearm, slides across the wet tiles, then snaps a batarang that cuts a bright arc past Spider-Man. Spider-Man flips over it and lands in a crouch as Batman immediately rushes forward with his cape spreading behind him. Fast character motion has only localized limb and cape streaks; no full-frame motion blur, no depth-of-field blur, no fog wash, no camera shake. Strong readable silhouettes, hard impacts, debris and water spray react to each move. End mid-action as Batman begins the next strike.\n\noverall_soundscape:\nRain hitting metal and tile, web-line snap, armored block impact, boots scraping wet stone, batarang whistle, cape movement, distant thunder.\n\nnon_diegetic_music:\nOriginal tense electronic percussion with a driving arcade-fighting rhythm; no recognizable theme music.",
+      "width": 1344,
+      "height": 768,
+      "length": 192
+    }
+  },
+  "8": {
+    "class_type": "BasicGuider",
+    "inputs": {
+      "model": ["6", 0],
+      "conditioning": ["7", 0]
+    }
+  },
+  "9": {
+    "class_type": "KSamplerSelect",
+    "inputs": {
+      "sampler_name": "euler"
+    }
+  },
+  "10": {
+    "class_type": "RandomNoise",
+    "inputs": {
+      "noise_seed": 81880001
+    }
+  },
+  "11": {
+    "class_type": "SamplerCustomAdvanced",
+    "inputs": {
+      "noise": ["10", 0],
+      "guider": ["8", 0],
+      "sampler": ["9", 0],
+      "sigmas": ["6", 1],
+      "latent_image": ["7", 1]
+    }
+  },
+  "12": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": ["11", 0],
+      "vae": ["3", 0]
+    }
+  },
+  "13": {
+    "class_type": "VAEDecodeAudio",
+    "inputs": {
+      "samples": ["11", 0],
+      "vae": ["4", 0]
+    }
+  },
+  "14": {
+    "class_type": "CreateVideo",
+    "inputs": {
+      "images": ["12", 0],
+      "audio": ["13", 0],
+      "fps": 24
+    }
+  },
+  "15": {
+    "class_type": "SaveVideo",
+    "inputs": {
+      "video": ["14", 0],
+      "filename_prefix": "video/FastH3/11111111-1111-4111-8111-111111111111",
+      "format": "mp4",
+      "codec": "auto"
+    }
+  }
+}
