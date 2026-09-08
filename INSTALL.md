@@ -7,8 +7,6 @@ Use Linux for production, Node.js 24+, npm, Python 3.10+, PostgreSQL 17, FFmpeg/
 ```bash
 git clone https://github.com/linkprint-inc/crowdmovie.git
 cd crowdmovie
-# While PR #1 is open, the complete code is on this branch:
-git switch codex/initial-v1
 cd app
 npm ci
 npm -w server run build
