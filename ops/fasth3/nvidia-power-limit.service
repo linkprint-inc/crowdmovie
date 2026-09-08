@@ -1,0 +1,14 @@
+[Unit]
+Description=Set RTX PRO 6000 power limit to 500 W
+After=nvidia-persistenced.service
+Wants=nvidia-persistenced.service
+Before=comfyui.service comfyui-fasth3.service
+ConditionPathExists=/dev/nvidia0
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/nvidia-smi --id=0 --power-limit=500
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

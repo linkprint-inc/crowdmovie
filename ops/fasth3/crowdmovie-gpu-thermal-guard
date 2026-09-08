@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+GPU_INDEX="${GPU_INDEX:-0}"
+BASE_POWER_LIMIT_W="${BASE_POWER_LIMIT_W:-500}"
+MIN_POWER_LIMIT_W="${MIN_POWER_LIMIT_W:-150}"
+POWER_STEP_W="${POWER_STEP_W:-25}"
+REDUCE_ABOVE_C="${REDUCE_ABOVE_C:-82}"
+RESTORE_AT_OR_BELOW_C="${RESTORE_AT_OR_BELOW_C:-78}"
+NVIDIA_SMI_BIN="${NVIDIA_SMI_BIN:-/usr/bin/nvidia-smi}"
+
+gpu_state="$("${NVIDIA_SMI_BIN}" \
+  --id="${GPU_INDEX}" \
+  --query-gpu=temperature.gpu,power.limit,power.min_limit,power.max_limit \
+  --format=csv,noheader,nounits)"
+
+IFS=',' read -r temperature_raw current_limit_raw hardware_min_raw hardware_max_raw <<<"${gpu_state}"
+
+as_integer() {
+  awk -v value="$1" 'BEGIN { printf "%.0f", value + 0 }'
+}
+
+temperature="$(as_integer "${temperature_raw}")"
+current_limit="$(as_integer "${current_limit_raw}")"
+hardware_min="$(as_integer "${hardware_min_raw}")"
+hardware_max="$(as_integer "${hardware_max_raw}")"
+
+for value in \
+  "${temperature}" \
+  "${current_limit}" \
+  "${hardware_min}" \
+  "${hardware_max}" \
+  "${BASE_POWER_LIMIT_W}" \
+  "${MIN_POWER_LIMIT_W}" \
+  "${POWER_STEP_W}" \
+  "${REDUCE_ABOVE_C}" \
+  "${RESTORE_AT_OR_BELOW_C}"; do
+  if [[ ! "${value}" =~ ^[0-9]+$ ]]; then
+    echo "Invalid numeric GPU thermal guard value: ${value}" >&2
+    exit 1
+  fi
+done
+
+ceiling="${BASE_POWER_LIMIT_W}"
+if (( ceiling > hardware_max )); then
+  ceiling="${hardware_max}"
+fi
+
+floor="${MIN_POWER_LIMIT_W}"
+if (( floor < hardware_min )); then
+  floor="${hardware_min}"
+fi
+if (( floor > ceiling )); then
+  echo "GPU thermal guard floor ${floor} W exceeds ceiling ${ceiling} W" >&2
+  exit 1
+fi
+
+target_limit="${current_limit}"
+reason=""
+
+if (( current_limit > ceiling )); then
+  target_limit="${ceiling}"
+  reason="above-configured-ceiling"
+elif (( current_limit < floor )); then
+  target_limit="${floor}"
+  reason="below-configured-floor"
+elif (( temperature > REDUCE_ABOVE_C && current_limit > floor )); then
+  target_limit=$((current_limit - POWER_STEP_W))
+  if (( target_limit < floor )); then
+    target_limit="${floor}"
+  fi
+  reason="temperature-above-${REDUCE_ABOVE_C}C"
+elif (( temperature <= RESTORE_AT_OR_BELOW_C && current_limit < ceiling )); then
+  target_limit=$((current_limit + POWER_STEP_W))
+  if (( target_limit > ceiling )); then
+    target_limit="${ceiling}"
+  fi
+  reason="temperature-at-or-below-${RESTORE_AT_OR_BELOW_C}C"
+fi
+
+if (( target_limit != current_limit )); then
+  "${NVIDIA_SMI_BIN}" --id="${GPU_INDEX}" --power-limit="${target_limit}"
+  printf 'temperature=%sC power_limit=%sW->%sW reason=%s\n' \
+    "${temperature}" "${current_limit}" "${target_limit}" "${reason}"
+fi

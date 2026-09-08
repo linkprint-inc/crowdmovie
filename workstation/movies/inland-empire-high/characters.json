@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "profile": "touhou-inland-empire-high-six-v1",
+  "status": "official",
+  "characters": [
+    {
+      "slot": "S1",
+      "name_en": "Koishi Komeiji",
+      "name_zh": "古明地恋",
+      "archetype": "ANTI-ESTABLISHMENT INDEPENDENT",
+      "anchor": "short pale-green hair; black round hat with yellow ribbon; yellow cardigan; green skirt; black shoes; blue heart-shaped third-eye cord; yellow top and green skirt never swap",
+      "voice_en": "very young-sounding, airy, dreamy, high-pitched little-girl voice; soft, distracted English delivery",
+      "comic_function": "the swing voter who does not know an election is happening and accidentally says the most destructive honest thing"
+    },
+    {
+      "slot": "S2",
+      "name_en": "Marisa Kirisame",
+      "name_zh": "雾雨魔理沙",
+      "archetype": "LIBERTARIAN INDEPENDENT",
+      "anchor": "blonde hair with one short side braid; huge floppy black witch hat with oversized white bow; white puffed-lantern-sleeve blouse; black sleeveless knee-length dress; white ruffled waist apron; black shoes; straw broom; never hoodie, zipper, tie, blazer, or varsity jacket",
+      "voice_en": "energetic youthful teenage-girl voice with a light rasp; quick, confident English delivery",
+      "comic_function": "turns every public crisis into an effective paid subscription before lunch"
+    },
+    {
+      "slot": "S3",
+      "name_en": "Reimu Hakurei",
+      "name_zh": "博丽灵梦",
+      "archetype": "PRAGMATIC CENTRIST",
+      "anchor": "black hair; giant red bow; red school jacket and skirt; white detached sleeves; black shoes; one unlabeled matte-gray duct-tape roll; never clipboard, microphone, donation jar, or balance scale",
+      "voice_en": "young teenage-girl voice, slightly lower but never adult; dry, controlled, deadpan English delivery",
+      "comic_function": "student-council president and fee window for compromises that make everyone angrier"
+    },
+    {
+      "slot": "S4",
+      "name_en": "Flandre Scarlet",
+      "name_zh": "芙兰朵露·斯卡蕾特",
+      "archetype": "ANTI-ESTABLISHMENT POPULIST",
+      "anchor": "short blonde hair; white mob cap with red ribbon; red dress over white puff-sleeve blouse; white socks; black shoes; black angular wing frames with seven multicolored crystals; plain smartphone; never hoodie or backpack",
+      "voice_en": "high-pitched, bright, impish little-girl voice; volatile, delighted English delivery",
+      "comic_function": "turns a quiet public meeting into a sponsored destruction livestream"
+    },
+    {
+      "slot": "S5",
+      "name_en": "Reisen Udongein Inaba",
+      "name_zh": "铃仙·优昙华院·因幡",
+      "archetype": "ANTI-WAR PROGRESSIVE",
+      "anchor": "long lavender hair; tall rabbit ears; red eyes; black school blazer; white shirt; red tie; pale skirt; black shoes; student-news microphone; blank clipboard",
+      "voice_en": "clear youthful teenage-girl voice; precise, earnest student-reporter English delivery, never mature or authoritative-adult",
+      "comic_function": "spots the genuine abuse but explains it until the audience changes channels"
+    },
+    {
+      "slot": "S6",
+      "name_en": "Cirno",
+      "name_zh": "琪露诺",
+      "archetype": "RIGHT-WING POPULIST",
+      "anchor": "short light-blue hair; giant blue bow; blue-and-white varsity hoodie dress; black shoes; six crystalline ice wings; blank megaphone",
+      "voice_en": "loud, bright, childish little-girl voice; boastful, breathless English delivery",
+      "comic_function": "turns a weather report into a culture war and sometimes proves the wrong thesis with a working experiment"
+    }
+  ],
+  "rules": [
+    "Never merge, duplicate, rename, recolor, or swap attributes between S1-S6.",
+    "Do not add another principal character.",
+    "Every principal must sound like a young girl or little girl speaking English; never use an adult male, boy, mature woman, deep, aged, or South Park character-imitation voice.",
+    "The production T2VA workflow uses these text anchors; future image-conditioned workflows must use the separately approved canonical PNG hashes."
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 2,
+  "profile": "whos-next-free-cast-v2",
+  "movie": "whos-next",
+  "status": "official",
+  "characters": [],
+  "casting_policy": {
+    "famous_figures": "Famous figures from movies, games, animation, comics, history and fine art are allowed. Common localized names and unmistakable descriptions count.",
+    "audience_originals": "A human audience pitch may introduce an original hero or figure. Keep every meaningful pitch visible and preserve the invention if selected.",
+    "fixed_cast": "None. There is no referee, announcer, vendor, rookie hero or other mandatory resident character.",
+    "staging": "No character is required to appear in every shot. Use only the figures needed for the selected action.",
+    "voice": "Use an original English voice appropriate to the figure; never imitate or clone a real performer.",
+    "naming": "For a country-specific film or television figure, preserve its canonical name in the original language and script in every creative prompt and field; write 葫芦娃, not an English translation or transliteration. Surrounding prose and spoken dialogue remain English."
+  },
+  "visual_policy": {
+    "characters": "Each famous figure keeps its recognizable original appearance and source visual medium; never normalize the cast into the background style.",
+    "background_default": "Only the environment uses a crisp high-detail 3D game background with sharp level geometry, readable spatial layers, detailed textures, restrained atmosphere and interactive debris when the user gives no background-style direction. Keep it readable during motion; never wash out the whole frame with radial blur, fog, bokeh or shallow focus.",
+    "background_override": "Only an explicit background style in a human audience submission overrides the environment default; AI-authored outlines, pitches, shots and thread memory do not. Mixed media are expected."
+  },
+  "shot_rule": "Each production unit is one concrete 5–15 second action shot that opens already in motion, sustains one visible physical beat every 1.5–2 seconds, uses one dominant camera idea, and ends with active momentum."
+}

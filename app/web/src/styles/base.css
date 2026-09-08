@@ -1,0 +1,769 @@
+/* Reset + page frame. Ported from the approved mockup. */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.65;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#app {
+  display: contents;
+}
+::selection {
+  background: var(--hl);
+  color: var(--ink);
+}
+a {
+  color: var(--blue);
+}
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+/* Spec §10: focus is shown on the control itself, never as an extra halo. */
+:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 2px;
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- marquee ---------- */
+.marquee {
+  border-bottom: 2px solid var(--ink);
+  background: var(--teal);
+  overflow: hidden;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.marquee .in {
+  display: inline-block;
+  padding: 6px 0;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  color: #ffffff;
+  animation: roll 30s linear infinite;
+}
+@keyframes roll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- nav ---------- */
+.navbar {
+  flex-shrink: 0;
+  border-bottom: 2px solid var(--ink);
+  background: var(--card);
+}
+.navbar .in {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 30px;
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+}
+.nav-link {
+  border: 0;
+  background: none;
+  padding: 11px 15px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+.nav-link:hover {
+  color: var(--ink);
+  background: #fbf7ec;
+}
+.nav-link[aria-current="page"] {
+  color: var(--ink);
+  border-bottom-color: var(--blue);
+}
+.nav-spacer {
+  flex: 1;
+}
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 0;
+}
+.who {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.who b {
+  color: var(--blue);
+  font-weight: 600;
+  font-family: var(--body);
+  font-size: 12.5px;
+}
+.btn-auth {
+  background: var(--blue);
+  color: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 9px;
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 5px 15px;
+  box-shadow: 2px 2px 0 var(--ink);
+  white-space: nowrap;
+}
+.btn-auth:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+.btn-auth.ghost {
+  background: var(--card);
+  color: var(--ink);
+}
+
+/* ---------- header ---------- */
+header {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: 64fr 36fr;
+  gap: 30px;
+  align-items: center;
+  padding: 14px 30px 8px;
+  max-width: 1360px;
+  margin: 0 auto;
+}
+.head-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.head-right {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  min-width: 0;
+}
+h1.mast {
+  font-family: var(--disp);
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 1;
+  /* Deep cobalt, not ink: it sits opposite the red AI on the colour wheel, so
+     those two letters read brighter than they do against black. 11.2:1 on
+     cream, well past AA. It is deliberately several stops darker than --blue
+     so the masthead never reads as the blue "user action" ink. */
+  color: var(--mast-ink);
+  text-shadow: 3px 3px 0 var(--hl);
+}
+h1.mast a {
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+/* The logo is decorative: the wordmark beside it already names the site,
+   so alt="" keeps screen readers from announcing it twice. */
+h1.mast .mark {
+  width: 36px;
+  height: 36px;
+  display: block;
+  flex-shrink: 0;
+}
+h1.mast .ai {
+  color: var(--red);
+}
+.live-chip {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--pink);
+  border: 2px solid var(--ink);
+  border-radius: 99px;
+  padding: 4px 12px;
+  letter-spacing: 0.08em;
+  transform: rotate(-2deg);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+.live-chip i {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: var(--red);
+  border-radius: 50%;
+  margin-right: 6px;
+  animation: blink 2.2s steps(2) infinite;
+}
+/* ---------- movie picker ---------- */
+.movie-picker-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(20, 17, 15, 0.72);
+  backdrop-filter: blur(7px);
+}
+.movie-picker {
+  width: min(1120px, 96vw);
+  max-height: min(820px, 92vh);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--cream);
+  border: 3px solid var(--ink);
+  border-radius: 20px;
+  box-shadow: 10px 10px 0 var(--blue);
+}
+.movie-picker-head {
+  max-width: none;
+  width: auto;
+  margin: 0;
+  padding: 22px 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  border-bottom: 2px solid var(--ink);
+  background: var(--card);
+}
+.movie-picker-head h2 {
+  margin: 2px 0 5px;
+  font: 800 30px/1 var(--disp);
+}
+.movie-picker-head p:not(.eyebrow) {
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+.eyebrow {
+  font: 700 10px var(--mono);
+  letter-spacing: 0.13em;
+  color: var(--blue);
+  text-transform: uppercase;
+}
+.movie-picker-close {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--pink);
+  box-shadow: 3px 3px 0 var(--ink);
+  font-size: 27px;
+  line-height: 1;
+}
+.movie-picker-body {
+  min-height: 0;
+  overflow: auto;
+  padding: 24px 26px 28px;
+}
+.movie-shelf {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 22px;
+}
+.movie-poster-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  gap: 13px;
+  align-items: center;
+  min-height: 108px;
+  padding: 10px;
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  background: var(--card);
+  text-align: left;
+}
+.movie-poster-card.selected {
+  background: #fff;
+  box-shadow: 5px 5px 0 var(--orange);
+}
+.movie-poster-card > i {
+  position: absolute;
+  top: -9px;
+  right: 9px;
+  padding: 2px 8px;
+  border: 1.5px solid var(--ink);
+  border-radius: 99px;
+  background: var(--hl);
+  font: 700 9px var(--mono);
+  font-style: normal;
+}
+.movie-poster-art {
+  height: 84px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  border-radius: 9px;
+  background: linear-gradient(145deg, #384ca2, #ef6b4e 62%, #f3cc58);
+  color: #fff;
+  font: 800 26px var(--disp);
+}
+.movie-poster-art.movie-whos-next {
+  background: linear-gradient(145deg, #1b1b2f, #3d3d5c 45%, #f2b134 46%, #b8322a);
+}
+.movie-poster-art.movie-poster-mosaic {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  place-items: stretch;
+  gap: 3px;
+  padding: 3px;
+  background: var(--card);
+}
+.movie-poster-art img {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  object-fit: cover;
+}
+.movie-poster-copy {
+  min-width: 0;
+}
+.movie-poster-copy strong,
+.movie-poster-copy small {
+  display: block;
+}
+.movie-poster-copy strong {
+  font-size: 15px;
+}
+.movie-poster-copy small {
+  margin-top: 6px;
+  font: 600 9px var(--mono);
+  color: var(--ink-soft);
+}
+.movie-detail-panel {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(360px, 1.1fr);
+  gap: 22px;
+  padding: 22px;
+  border: 2px solid var(--ink);
+  border-radius: 16px;
+  background: var(--card);
+}
+.movie-detail-copy h3 {
+  margin: 4px 0 12px;
+  font: 800 32px/1.05 var(--disp);
+}
+.movie-detail-copy > p:not(.eyebrow) {
+  max-width: 55ch;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+.movie-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 16px 0;
+}
+.movie-facts span {
+  padding: 4px 9px;
+  border: 1.5px solid var(--ink);
+  border-radius: 99px;
+  font: 600 10px var(--mono);
+  background: var(--cream);
+}
+.watch-live {
+  padding: 9px 16px;
+  border: 2px solid var(--ink);
+  border-radius: 9px;
+  background: var(--blue);
+  color: #fff;
+  box-shadow: 3px 3px 0 var(--ink);
+  font-weight: 800;
+}
+.episode-picker {
+  min-height: 230px;
+  max-height: 330px;
+  overflow: auto;
+  padding-right: 7px;
+}
+.episode-picker-title {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0 0 9px;
+  background: var(--card);
+}
+.episode-picker-title span {
+  font: 600 9px var(--mono);
+  color: var(--ink-soft);
+}
+.episode-choice {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 66px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 11px 8px;
+  border: 0;
+  border-top: 1px solid rgba(29, 24, 20, 0.18);
+  background: transparent;
+  text-align: left;
+}
+.episode-choice:hover {
+  background: var(--cream);
+}
+.episode-choice > span,
+.episode-choice > small {
+  font: 600 10px var(--mono);
+}
+.episode-choice > span {
+  color: var(--blue);
+}
+.episode-choice > small {
+  color: var(--ink-soft);
+}
+.movie-picker-empty {
+  padding: 32px 10px;
+  color: var(--ink-soft);
+  text-align: center;
+}
+@keyframes blink {
+  50% {
+    opacity: 0.2;
+  }
+}
+.lang-select {
+  margin-left: auto;
+  appearance: none;
+  -webkit-appearance: none;
+  font: 600 13px var(--body);
+  color: var(--ink);
+  background: var(--card)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%231D1814' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E")
+    no-repeat right 13px center;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  padding: 7px 34px 7px 14px;
+  box-shadow: 3px 3px 0 var(--ink);
+  cursor: pointer;
+}
+/* Spec §10: the language select must not keep a ring after it is clicked. */
+.lang-select:focus,
+.lang-select:focus-visible {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 3px 3px 0 var(--blue);
+}
+.clock {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--mono);
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  padding: 4px 12px;
+  box-shadow: 3px 3px 0 var(--orange);
+}
+.clock .lbl {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  letter-spacing: 0.08em;
+}
+.clock .t {
+  font-size: 18px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.replay-clock .t {
+  font-size: 16px;
+  letter-spacing: 0.04em;
+}
+.return-live {
+  flex: 0 0 auto;
+  font: 700 12px var(--mono);
+  color: var(--card);
+  background: var(--red);
+  border: 2px solid var(--ink);
+  border-radius: 9px;
+  padding: 8px 11px;
+  text-decoration: none;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.return-live:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.return-live:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 2px;
+}
+.leader {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: none;
+  place-items: center;
+  position: relative;
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 13px;
+}
+.clock.final .leader {
+  display: grid;
+}
+.clock.final .t {
+  display: none;
+}
+.leader::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(var(--red) var(--deg, 0deg), #ede2c8 0);
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+.leader::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: var(--card);
+}
+.leader b {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- view host ---------- */
+.viewport {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+.page {
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #c9bba0 transparent;
+}
+.page .inner {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 26px 30px 50px;
+}
+.ptitle {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-family: var(--disp);
+  font-weight: 800;
+  font-size: 26px;
+  margin: 6px 0 6px;
+}
+.ptitle small {
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--ink-soft);
+}
+.plead {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  max-width: 66ch;
+  margin-bottom: 20px;
+}
+.foot-note {
+  margin: 24px 2px 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+  letter-spacing: 0.06em;
+}
+.disclaimer {
+  margin-top: 24px;
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  max-width: 78ch;
+}
+.subsec {
+  font-family: var(--disp);
+  font-weight: 800;
+  font-size: 17px;
+  margin: 26px 2px 12px;
+}
+.sec-label {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-family: var(--disp);
+  font-weight: 800;
+  font-size: 21px;
+  margin: 32px 2px 16px;
+}
+.sec-label small {
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--ink-soft);
+}
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  background: none;
+  font: 600 12.5px var(--body);
+  color: var(--blue);
+  padding: 4px 0;
+  margin-bottom: 6px;
+}
+
+/* An empty / error state inside any panel. Text carries the meaning, colour
+   never does on its own (spec §10). */
+.empty {
+  padding: 22px 16px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+.empty b {
+  display: block;
+  color: var(--ink);
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+.empty.bad b {
+  color: var(--red);
+}
+
+@media (max-width: 1000px) {
+  body {
+    height: auto;
+    display: block;
+    overflow: auto;
+    overflow-x: hidden;
+  }
+  #app {
+    display: block;
+  }
+  .viewport {
+    height: auto;
+  }
+  .page {
+    height: auto;
+    overflow: visible;
+  }
+  header {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .navbar .in {
+    overflow-x: auto;
+  }
+  .movie-detail-panel {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 560px) {
+  header,
+  .navbar .in,
+  .page .inner {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  h1.mast {
+    font-size: 24px;
+  }
+  h1.mast .mark {
+    width: 28px;
+    height: 28px;
+  }
+  /* Spec §9: 44px minimum touch targets. */
+  .nav-link {
+    min-height: 44px;
+    padding: 11px 13px;
+  }
+  .btn-auth {
+    min-height: 44px;
+  }
+  .movie-picker-backdrop {
+    padding: 8px;
+  }
+  .movie-picker {
+    max-height: 96vh;
+    border-radius: 14px;
+  }
+  .movie-picker-head,
+  .movie-picker-body {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .movie-shelf {
+    grid-template-columns: 1fr;
+  }
+  .movie-detail-panel {
+    padding: 15px;
+  }
+  .episode-choice {
+    grid-template-columns: 58px 1fr;
+  }
+  .episode-choice small {
+    grid-column: 2;
+  }
+}
+
+/* Spec §8.6 / §10 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001s !important;
+    animation-delay: 0s !important;
+    transition: none !important;
+  }
+  .marquee .in {
+    animation: none;
+  }
+}

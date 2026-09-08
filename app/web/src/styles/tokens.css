@@ -1,0 +1,26 @@
+/* Design tokens — spec §8.2 / §8.3. Mirrors the approved mockup's :root block.
+   Ink semantics are load-bearing and must not be reused decoratively:
+     --red    AI only     (scores, roasts, countdown disc)
+     --blue   user only   (names, votes, buttons, input)
+     --hl     canon only  (accepted rows, masthead drop shadow)
+   Teal / purple / pink / orange are frame-layer decoration only. */
+:root {
+  --cream: #f2e7cf;
+  --card: #ffffff;
+  --ink: #1d1814;
+  --mast-ink: #152a5e; /* masthead wordmark only; far darker than --blue on purpose */
+  --ink-soft: #5c544a;
+  --red: #e03a2a;
+  --blue: #2e63e8;
+  --hl: #ffd62e;
+  --teal: #00b893;
+  --purple: #7a5cff;
+  --pink: #ff8fc7;
+  --orange: #ff7a1a;
+  --bezel: #241e18;
+
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --body: "IBM Plex Sans", "Noto Sans SC", "Noto Sans JP", "PingFang SC", "Hiragino Sans GB",
+    sans-serif;
+  --disp: "Bricolage Grotesque", "Noto Sans SC", "Noto Sans JP", "PingFang SC", sans-serif;
+}

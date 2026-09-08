@@ -1,0 +1,39 @@
+{
+  "version": "h3-capabilities-v5",
+  "engine": "minimax-h3-fl2va-pdd-acc-8nfe-full-int8-convrot",
+  "execution_backend": "http://127.0.0.1:8188",
+  "controlled_gateway": "http://192.168.10.20:8191",
+  "comfyui_version": "0.34.0",
+  "fps": 24,
+  "duration_seconds": {
+    "minimum": 5,
+    "maximum": 15,
+    "fixed_default": false,
+    "length_formula": "round(duration_seconds*24) padded upward to length % 17 == 5 and capped at 345 frames"
+  },
+  "sizes": [[1344, 768]],
+  "fixed_parameters": {
+    "steps": 8,
+    "nfe": "8",
+    "sampler": "euler",
+    "sigma_source": "MiniMaxH3PDDAccApply",
+    "sigma_shift_video": 12,
+    "sigma_shift_audio": 3,
+    "guidance": 1,
+    "fps": 24,
+    "output_format": "mp4",
+    "output_codec": "auto"
+  },
+  "image_conditioning": {
+    "first_frame": true,
+    "last_frame": false,
+    "source": "immediately_previous_published_tail_png"
+  },
+  "motion_context": {"enabled": false},
+  "external_loras": {"enabled": false},
+  "style_profile": "whos-next-elden-ring-soulslike-realistic-v7",
+  "style_enforced": true,
+  "character_profile": "whos-next-famous-cast-v3",
+  "character_enforced": true,
+  "output_prefix": "video/FastH3/<round UUID>"
+}

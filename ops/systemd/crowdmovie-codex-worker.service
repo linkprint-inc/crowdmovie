@@ -1,0 +1,37 @@
+[Unit]
+Description=CrowdAIMovie Codex content worker
+Wants=network-online.target
+After=network-online.target postgresql.service
+
+[Service]
+User=crowdmovie
+WorkingDirectory=/opt/crowdmovie/app
+EnvironmentFile=/etc/crowdmovie/codex.env
+Environment=SERVICE_ROLE=codex
+Environment=CODEX_HOME=/var/lib/crowdmovie/codex
+ExecStart=/usr/bin/node server/dist/index.js
+Restart=always
+RestartSec=3
+MemoryMax=1500M
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+# systemd reads EnvironmentFile before entering the service namespace. The
+# worker keeps the parsed values, while model-generated commands cannot reopen
+# the credential files even if they ignore the content-only prompt.
+InaccessiblePaths=/etc/crowdmovie
+ReadWritePaths=/var/lib/crowdmovie
+PrivateTmp=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+
+# Egress allow-list: DEFERRED ON PURPOSE, see the implementation plan §7
+# ("Codex 单元出站白名单"). IPAddressAllow= takes IPs and CIDRs only -- systemd
+# cannot allow a hostname, and this worker must reach the OpenAI API, whose
+# resolved addresses rotate. Uncommenting the two lines below would deny that
+# traffic and break the Codex CLI outright, so they stay off until the traffic
+# goes through a local proxy and only the proxy needs allowing.
+# IPAddressDeny=any
+# IPAddressAllow=127.0.0.1 192.168.10.20
+
+[Install]
+WantedBy=multi-user.target

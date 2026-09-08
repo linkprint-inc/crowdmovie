@@ -1,0 +1,9 @@
+.movie-poster-card .movie-poster-art.movie-whos-next {
+  background-image: url("/whos-next-title-88f57667.webp");
+  background-position: center;
+  background-size: cover;
+}
+
+.movie-poster-art.movie-whos-next > b {
+  display: none;
+}

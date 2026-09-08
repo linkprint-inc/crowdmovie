@@ -1,0 +1,15 @@
+{
+  "version": "h3-capabilities-v3",
+  "engine": "minimax-h3-fl2va-pdd-acc-8step-int8-convrot",
+  "comfyui_version": "0.34.0",
+  "fps": 24,
+  "duration_seconds": {"minimum": 5, "maximum": 15, "length_formula": "round(duration_seconds*24) padded upward to length % 17 == 5"},
+  "sizes": [[1344, 768]],
+  "fixed_parameters": {"steps": 8, "nfe": "8", "sampler": "euler", "sigma_source": "MiniMaxH3PDDAccApply", "sigma_shift_video": 12.0, "sigma_shift_audio": 3.0, "guidance": 1.0, "combat_lora": "H3_Combat_V2.safetensors", "combat_lora_strength": 0.6, "combat_trigger": "prfight2", "fps": 24, "output_format": "mp4", "output_codec": "auto"},
+  "image_conditioning": {"first_frame": true, "source": "previous_scene_end_frame", "input_path": "crowdmovie/<round_id>.png", "envelope_field": "first_frame"},
+  "style_profile": "whos-next-pixar-feature-kinetic-v4",
+  "style_enforced": true,
+  "character_profile": "whos-next-free-cast-v2",
+  "character_enforced": true,
+  "output_prefix": "video/FastH3/<round UUID>"
+}

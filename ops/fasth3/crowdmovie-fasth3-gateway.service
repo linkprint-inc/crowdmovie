@@ -1,0 +1,28 @@
+[Unit]
+Description=CrowdMovie fixed FastH3 T2VA gateway
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /opt/comfyui-fasth3/gateway/fasth3_gateway.py
+Environment=PYTHONUNBUFFERED=1
+Environment=FASTH3_GATEWAY_HOST=127.0.0.1
+Environment=FASTH3_GATEWAY_PORT=8191
+Environment=FASTH3_ALLOWED_CLIENTS=127.0.0.1
+Environment=FASTH3_PUBLIC_BASE_URL=http://127.0.0.1:8191
+Environment=FASTH3_COMFY_URL=http://127.0.0.1:8188
+Environment=FASTH3_OUTPUT_ROOT=/opt/comfyui-fasth3/ComfyUI/output
+Environment=FASTH3_STATE_PATH=/var/lib/crowdmovie-fasth3/jobs.json
+Environment=FASTH3_GENERATION_TIMEOUT_SECONDS=1800
+StateDirectory=crowdmovie-fasth3
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=15
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=read-only
+ProtectSystem=strict
+
+[Install]
+WantedBy=multi-user.target
