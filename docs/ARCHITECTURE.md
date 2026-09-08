@@ -1,17 +1,17 @@
 # Architecture
 
-浏览器通过 Caddy 访问 Vue 静态页面、Fastify API/SSE 与发布媒体。PostgreSQL 是用户、投稿、投票、轮次、AI 运行和作业状态的事实来源。同一 `app/server/dist/index.js` 以 `SERVICE_ROLE` 启动三个独立进程。
+Browsers access Vue static pages, the Fastify API/SSE endpoints, and published media through Caddy. PostgreSQL is the source of truth for users, submissions, votes, rounds, AI runs, and job state. The same `app/server/dist/index.js` entry point runs as three separate processes, selected by `SERVICE_ROLE`.
 
-| 角色 | 职责 |
+| Role | Responsibilities |
 | --- | --- |
-| web | 登录/session、投稿/投票、片单、SSE、分享 OG 页面、媒体状态 |
-| worker | 轮次时钟、维护、账本与恢复调度 |
-| codex | 内容任务、导演、H3 调度、媒体检查与发布链 |
+| web | Login/sessions, submissions/voting, movie catalog, SSE, share-page OG metadata, and media status |
+| worker | Round timing, maintenance, job ledger management, and recovery scheduling |
+| codex | Content tasks, directing, H3 dispatch, media checks, and the publication pipeline |
 
-典型流程：人类下一镜头投稿 → 评分/翻译/投票 → 轮次采用投稿 → director → video → subtitle → publish。自动下一幕仅按数据库里的开关和调度条件运行。具体依赖由 `jobs/scheduler.ts` 与 `jobs/handlers/` 定义，不能靠 agent 的对话记忆修改。
+The typical flow is: human next-shot submission → scoring/translation/voting → round adopts a submission → director → video → subtitle → publish. Automatic next-scene generation runs only when the database flags and scheduling conditions allow it. Dependencies are defined by `jobs/scheduler.ts` and `jobs/handlers/`; an agent's conversation memory must not override them.
 
-`workflow_jobs` 持久化去重、状态、重试、lease 与依赖；长任务续租。`ai_runs` 保存实际 provider/model/effort、输出及 usage。`scenes` 保存已发布内容、摘要和媒体元数据。恢复应从这些表和 H3 job 状态开始，不要仅因 UI 超时重提视频。
+`workflow_jobs` persists deduplication, state, retries, leases, and dependencies; long-running tasks renew their leases. `ai_runs` records the actual provider/model/effort, output, and usage. `scenes` stores published content, summaries, and media metadata. Start recovery from these records and the H3 job state; do not resubmit video generation merely because the UI timed out.
 
-导演结构方案经服务端编译为 H3 prompt 和受控工作流。网关校验节点、模型、采样参数、路径及输入图摘要，再向 ComfyUI 投递。视频下载经过摘要与 ffprobe 验证；真实音频测量/ASR 形成字幕时间轴，publish 验证完整性并原子发布。不要用计划台词冒充实际识别结果。
+The server compiles the director's structured plan into an H3 prompt and a controlled workflow. The gateway validates nodes, models, sampling parameters, paths, and input-image digests before submitting to ComfyUI. Downloaded videos undergo digest and ffprobe verification. Measured audio and ASR results establish the subtitle timeline; publication validates integrity and publishes atomically. Never present planned dialogue as actual transcription.
 
-`workstation/` 是只读素材库；内容代理不操作 PostgreSQL、ComfyUI 或发布路径。`ops/runbook.sql` 是显式运营操作入口，需要单独选定动作和目标。
+`workstation/` is a read-only content library. Content agents do not operate PostgreSQL, ComfyUI, or publication paths. `ops/runbook.sql` provides explicit operational actions; select the intended action and target separately before using it.
